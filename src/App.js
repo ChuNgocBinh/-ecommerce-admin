@@ -11,7 +11,6 @@ function App() {
           alt="logo"
         />
         <p>
-
         </p>
         <a
           className="App-link"
