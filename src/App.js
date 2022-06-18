@@ -11,12 +11,6 @@ function App() {
           alt="logo"
         />
         <p>
-          {' '}
-          Edi
-          {' '}
-          <code>src/App.js</code>
-          {' '}
-          and save to reload.
         </p>
         <a
           className="App-link"
