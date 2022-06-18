@@ -12,7 +12,7 @@ function App() {
         />
         <p>
           {' '}
-          Edit
+          Edi
           {' '}
           <code>src/App.js</code>
           {' '}
