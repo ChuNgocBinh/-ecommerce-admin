@@ -20,3 +20,11 @@ export function getDataItemProduct(id) {
     method: 'GET',
   });
 }
+
+export function updateProductItem(id, data) {
+  return request({
+    url: `/product/update-product/${id}`,
+    method: 'POST',
+    data,
+  });
+}

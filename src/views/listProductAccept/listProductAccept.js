@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   CardMedia,
@@ -10,13 +9,10 @@ import React, { useEffect, useState } from 'react';
 import { getListUser } from 'services/user';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
-import AddIcon from '@mui/icons-material/Add';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import LockIcon from '@mui/icons-material/Lock';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import './listProductAccept.sass';
-import { getListProductAccept, getDataItemProduct } from 'services/product';
+import { getListProductAccept, getDataItemProduct, updateProductItem } from 'services/product';
 
 const style = {
   position: 'absolute',
@@ -24,6 +20,8 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 600,
+  height: 600,
+  overflowY: 'scroll',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -34,7 +32,6 @@ function ListProductsWaiting() {
   const [listProducts, setListProducts] = useState([]);
   const [open, setOpen] = useState(false);
   const [data, setData] = useState([]);
-  const [change, setChange] = useState({});
   const fetchListProductWaiting = async () => {
     try {
       const res = await getListProductAccept();
@@ -59,26 +56,27 @@ function ListProductsWaiting() {
     setOpen(false);
   };
 
-  const handleShowForm = () => {
-    setData([]);
-    setOpen(true);
-  };
-
   const handleGetDetail = async (id) => {
     try {
       await getDataItemProduct(id).then((rs) => {
         if (rs) {
           setOpen(true);
           setData(rs.data.data);
-          setChange(rs.data.data);
         }
       });
     } catch (error) {
       console.log(error);
     }
   };
-  const handleSubmit = () => {
-    console.log([...change]);
+
+  const hanldeAccept = async (id) => {
+    await updateProductItem(id, { isAccept: 1 }).then((res) => {
+      if (res.status === 200) {
+        // eslint-disable-next-line
+        alert('success');
+        fetchListProductWaiting();
+      }
+    }).catch((error) => console.log(error));
   };
 
   return (
@@ -127,18 +125,15 @@ function ListProductsWaiting() {
             <TableCell>
               <div className="listUser_actions">
                 <span
-                  onClick={handleShowForm}
-                  aria-hidden="true"
-                >
-                  <AddIcon color="primary" />
-                </span>
-                <span
                   onClick={() => handleGetDetail(product?.id)}
                   aria-hidden="true"
                 >
                   <VisibilityIcon color="primary" />
                 </span>
-                <span>
+                <span
+                  onClick={() => hanldeAccept(product?.id)}
+                  aria-hidden="true"
+                >
                   <CheckCircleOutlineIcon color="secondary" />
                 </span>
                 <span
@@ -169,42 +164,41 @@ function ListProductsWaiting() {
           />
           <div className="input_text">
             <span>Upload</span>
-            <TextField type="file" className="text" id="product_name" onChange={(e) => setChange(e.target.value)} />
+            <TextField type="file" className="text" id="product_name" />
           </div>
           <div className="input_text">
             <span>Product name</span>
-            <TextField className="text" value={change?.product_name} id="product_name" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.product_name} id="product_name" />
           </div>
           <div className="input_text">
             <span>Brand</span>
-            <TextField className="text" value={change?.brand} id="outlined-basic" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.brand} id="outlined-basic" />
           </div>
           <div className="input_text">
             <span>Cost</span>
-            <TextField className="text" value={change?.cost} id="outlined-basic" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.cost} id="outlined-basic" />
           </div>
           <div className="input_text">
             <span>Discount</span>
-            <TextField className="text" value={change?.discount} id="outlined-basic" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.discount} id="outlined-basic" />
           </div>
           <div className="input_text">
             <span>Quantity</span>
-            <TextField className="text" value={change?.quantity} id="outlined-basic" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.quantity} id="outlined-basic" />
           </div>
           <div className="input_text">
             <span>Description</span>
-            <TextField className="text" value={change?.description} id="outlined-basic" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.description} id="outlined-basic" />
           </div>
           <div className="input_text">
             <span>IsAccept</span>
-            <TextField className="text" value={change?.isAccept} id="outlined-basic" onChange={(e) => setChange(e.target.value)} />
+            <TextField className="text" value={data?.isAccept} id="outlined-basic" />
           </div>
           <Button
             style={{
               marginTop: 20, width: '100%',
             }}
             variant="contained"
-            onClick={handleSubmit}
           >
             Submit
           </Button>

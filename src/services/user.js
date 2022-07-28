@@ -21,3 +21,25 @@ export function getListUser() {
     method: 'GET',
   });
 }
+
+export function getUserItem(id) {
+  return request({
+    url: `/auth/list-user/${id}`,
+    method: 'GET',
+  });
+}
+
+export function updateUser(id, data) {
+  return request({
+    url: `/auth/update-user/${id}`,
+    method: 'POST',
+    data,
+  });
+}
+
+export function deleteUser(id) {
+  return request({
+    url: `/auth/delete-user/${id}`,
+    method: 'POST',
+  });
+}
