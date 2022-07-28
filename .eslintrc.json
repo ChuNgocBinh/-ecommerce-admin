@@ -42,13 +42,22 @@
             "single"
         ],
         "no-tabs": 0,
-        "no-unused-vars": 1,
+        "no-unused-vars": 0,
         "max-len": [
             0,
             {
                 "code": 120,
                 "tabWidth": 4
             }
-        ]
+        ],
+        "import/no-unresolved": 0,
+        "linebreak-style": 0,
+        "no-console": 0,
+        "implicit-arrow-linebreak": 0,
+        "import/prefer-default-export": 0,
+        "no-param-reassign": 0,
+        "react/prop-types": 0,
+        "react/no-array-index-key": 0,
+        "camelcase": 0
     }
 }
