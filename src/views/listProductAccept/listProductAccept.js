@@ -131,12 +131,6 @@ function ListProductsWaiting() {
                   <VisibilityIcon color="primary" />
                 </span>
                 <span
-                  onClick={() => hanldeAccept(product?.id)}
-                  aria-hidden="true"
-                >
-                  <CheckCircleOutlineIcon color="secondary" />
-                </span>
-                <span
                   // onClick={() => handleDeleteProduct(product.id)}
                   aria-hidden="true"
                 >
